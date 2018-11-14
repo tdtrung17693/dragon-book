@@ -1,5 +1,5 @@
 -module (parser).
--export ([parse/2]).
+-export ([parse/2, main/0]).
 
 parse(ex1, Source) ->
     case length(s1(string:strip(Source))) of
@@ -15,7 +15,7 @@ parse(ex3, Source) ->
     case length(s3(string:strip(Source))) of
         L when L > 0 -> erlang:error(invalid_expr);
         _ -> { ok }
-    end;
+    end.
 
 % S -> + S S | - S S | num
 % num -> num digit | digit
@@ -70,3 +70,9 @@ s3([ $1 | Source ]) -> [ $1 | Source ];
 s3([ $\s | Source ]) -> s3(Source);
 s3([ _ | Source ]) -> erlang:error(invalid_expr);
 s3([]) -> [].
+
+main() ->
+    case io:get_chars('', 1) of
+        eof -> init:stop();
+        A -> io:put_chars(A), main()
+    end.
