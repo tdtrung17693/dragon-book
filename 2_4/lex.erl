@@ -8,7 +8,7 @@ initialize_dict(Dict, []) -> Dict;
 initialize_dict(Dict, [{Tag, Keyword} | ReservedKeywords]) ->
     initialize_dict(dict:append(Keyword, {Tag, Keyword}, Dict), ReservedKeywords).
 
-get_char() ->
+getChar() ->
     case io:get_chars('', 1) of
         eof -> eof;
         Char ->
